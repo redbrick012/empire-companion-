@@ -266,10 +266,14 @@ document.addEventListener(
 
 function openPDLogin() {
 
-    window.open(
-        "https://www.profounddecisions.co.uk/",
-        "_blank"
-    );
+    const status = document.getElementById("pdConnectionStatus");
+
+    status.innerHTML =
+        "🔄 Opening Profound Decisions...";
+
+    // Directly navigate to PD rather than using window.open().
+    window.location.href =
+        "https://www.profounddecisions.co.uk/";
 }
 
 
@@ -278,8 +282,8 @@ async function testPDConnection() {
     const status =
         document.getElementById("pdConnectionStatus");
 
-    status.textContent =
-        "🔄 Testing connection to Profound Decisions...";
+    status.innerHTML =
+        "🔄 Testing connection...";
 
     try {
 
@@ -291,33 +295,21 @@ async function testPDConnection() {
             }
         );
 
-        if (response.ok) {
+        status.innerHTML =
+            "🟢 PD responded with HTTP " +
+            response.status +
+            ".<br><br>" +
+            "The browser allowed our request to reach PD.";
 
-            status.innerHTML =
-                "🟢 <strong>PD responded.</strong><br>" +
-                "The browser allowed the request. " +
-                "This is promising.";
-
-        } else {
-
-            status.innerHTML =
-                "🟡 <strong>PD responded with HTTP " +
-                response.status +
-                "</strong><br>" +
-                "We need to investigate the response.";
-
-        }
+        console.log("PD response:", response);
 
     } catch (error) {
 
-        console.error(
-            "PD connection test:",
-            error
-        );
+        console.error("PD connection test failed:", error);
 
         status.innerHTML =
-            "🔴 <strong>Browser blocked the connection.</strong><br>" +
-            "This is most likely PD's cross-origin security policy. " +
-            "Your PD login has not been exposed to the app.";
+            "🔴 Browser blocked the request.<br><br>" +
+            "<strong>This is useful!</strong><br>" +
+            "It means GitHub Pages cannot directly read PD from JavaScript.";
     }
 }

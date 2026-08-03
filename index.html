@@ -269,11 +269,25 @@
 
 
     <!-- Character -->
-    <section class="character">
+<section class="character">
 
-        <div class="character-name" id="characterName">
-    Loading...
-</div>
+    <select
+        id="characterSelector"
+        onchange="changeCharacter(this.value)"
+        style="
+            width:100%;
+            padding:10px;
+            margin-bottom:15px;
+            border-radius:8px;
+            border:1px solid #ccc;
+            background:white;
+            font-size:15px;
+        ">
+    </select>
+
+    <div class="character-name" id="characterName">
+        Loading...
+    </div>
 
 <div class="character-summary" id="characterSummary">
     Loading character...

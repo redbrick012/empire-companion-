@@ -263,3 +263,61 @@ document.addEventListener(
     "DOMContentLoaded",
     startApp
 );
+
+function openPDLogin() {
+
+    window.open(
+        "https://www.profounddecisions.co.uk/",
+        "_blank"
+    );
+}
+
+
+async function testPDConnection() {
+
+    const status =
+        document.getElementById("pdConnectionStatus");
+
+    status.textContent =
+        "🔄 Testing connection to Profound Decisions...";
+
+    try {
+
+        const response = await fetch(
+            "https://www.profounddecisions.co.uk/",
+            {
+                method: "GET",
+                credentials: "include"
+            }
+        );
+
+        if (response.ok) {
+
+            status.innerHTML =
+                "🟢 <strong>PD responded.</strong><br>" +
+                "The browser allowed the request. " +
+                "This is promising.";
+
+        } else {
+
+            status.innerHTML =
+                "🟡 <strong>PD responded with HTTP " +
+                response.status +
+                "</strong><br>" +
+                "We need to investigate the response.";
+
+        }
+
+    } catch (error) {
+
+        console.error(
+            "PD connection test:",
+            error
+        );
+
+        status.innerHTML =
+            "🔴 <strong>Browser blocked the connection.</strong><br>" +
+            "This is most likely PD's cross-origin security policy. " +
+            "Your PD login has not been exposed to the app.";
+    }
+}

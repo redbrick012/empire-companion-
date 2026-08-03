@@ -1,1 +1,466 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
 
+    <!-- Makes the app work properly on phones -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Empire Companion</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, Helvetica, sans-serif;
+            background: #20252b;
+            color: #222;
+        }
+
+        .app {
+            max-width: 600px;
+            margin: 0 auto;
+            min-height: 100vh;
+            background: #f4f4f4;
+        }
+
+        /* Header */
+
+        .header {
+            background: linear-gradient(135deg, #172b3a, #315b73);
+            color: white;
+            padding: 20px;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+        }
+
+        .header-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 22px;
+            font-weight: bold;
+        }
+
+        .subtitle {
+            font-size: 12px;
+            opacity: 0.8;
+            margin-top: 3px;
+        }
+
+        .menu-button {
+            background: rgba(255,255,255,0.15);
+            border: 1px solid rgba(255,255,255,0.3);
+            color: white;
+            border-radius: 8px;
+            padding: 8px 12px;
+            font-size: 20px;
+        }
+
+        /* Character */
+
+        .character {
+            padding: 20px;
+            background: white;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .character-name {
+            font-size: 30px;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .character-summary {
+            color: #666;
+            font-size: 15px;
+        }
+
+        .badges {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            margin-top: 12px;
+        }
+
+        .badge {
+            background: #e6eef3;
+            color: #315b73;
+            padding: 5px 9px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        /* Navigation */
+
+        .tabs {
+            display: flex;
+            overflow-x: auto;
+            background: #fff;
+            border-bottom: 1px solid #ccc;
+            scrollbar-width: none;
+        }
+
+        .tabs::-webkit-scrollbar {
+            display: none;
+        }
+
+        .tab {
+            flex: 0 0 auto;
+            border: none;
+            background: none;
+            padding: 14px 16px;
+            font-size: 14px;
+            color: #666;
+        }
+
+        .tab.active {
+            color: #315b73;
+            font-weight: bold;
+            border-bottom: 3px solid #315b73;
+        }
+
+        /* Content */
+
+        .content {
+            padding: 16px;
+        }
+
+        .section-title {
+            font-size: 18px;
+            font-weight: bold;
+            margin: 5px 0 12px;
+        }
+
+        /* Details card */
+
+        .details-card {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+        }
+
+        .detail-row {
+            display: flex;
+            justify-content: space-between;
+            gap: 15px;
+            padding: 12px 14px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .detail-row:last-child {
+            border-bottom: none;
+        }
+
+        .detail-label {
+            color: #777;
+            font-size: 13px;
+        }
+
+        .detail-value {
+            font-weight: bold;
+            text-align: right;
+            font-size: 14px;
+        }
+
+        /* Bonded item */
+
+        .item-card {
+            background: white;
+            margin-top: 16px;
+            border-radius: 12px;
+            padding: 16px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+        }
+
+        .item-name {
+            font-weight: bold;
+            font-size: 16px;
+        }
+
+        .item-type {
+            color: #777;
+            font-size: 13px;
+            margin-top: 3px;
+        }
+
+        .item-description {
+            margin-top: 12px;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+
+        /* Quick buttons */
+
+        .quick-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+            margin-top: 16px;
+        }
+
+        .quick-button {
+            border: none;
+            border-radius: 10px;
+            padding: 16px 10px;
+            background: white;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+            font-size: 14px;
+            font-weight: bold;
+            color: #315b73;
+        }
+
+        .quick-button span {
+            display: block;
+            font-size: 24px;
+            margin-bottom: 5px;
+        }
+
+        /* Footer */
+
+        .footer {
+            padding: 25px;
+            text-align: center;
+            color: #888;
+            font-size: 12px;
+        }
+
+        /* Desktop */
+
+        @media (min-width: 700px) {
+            body {
+                padding: 30px 0;
+            }
+
+            .app {
+                border-radius: 12px;
+                overflow: hidden;
+                box-shadow: 0 5px 25px rgba(0,0,0,0.3);
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="app">
+
+    <!-- Header -->
+    <header class="header">
+        <div class="header-top">
+            <div>
+                <div class="logo">⚔ Empire Companion</div>
+                <div class="subtitle">Profound Decisions character dashboard</div>
+            </div>
+
+            <button class="menu-button">☰</button>
+        </div>
+    </header>
+
+
+    <!-- Character -->
+    <section class="character">
+
+        <div class="character-name">
+            Iven
+        </div>
+
+        <div class="character-summary">
+            Navarr • Changeling • Vine
+        </div>
+
+        <div class="badges">
+            <div class="badge">Level 1</div>
+            <div class="badge">Played</div>
+            <div class="badge">SilverCloud</div>
+        </div>
+
+    </section>
+
+
+    <!-- Character tabs -->
+    <nav class="tabs">
+
+        <button class="tab active">
+            Details
+        </button>
+
+        <button class="tab">
+            Skills
+        </button>
+
+        <button class="tab">
+            Ribbons
+        </button>
+
+        <button class="tab">
+            Rituals
+        </button>
+
+        <button class="tab">
+            Spells
+        </button>
+
+        <button class="tab">
+            Background
+        </button>
+
+    </nav>
+
+
+    <!-- Main content -->
+    <main class="content">
+
+        <div class="section-title">
+            Character Details
+        </div>
+
+        <div class="details-card">
+
+            <div class="detail-row">
+                <div class="detail-label">CID</div>
+                <div class="detail-value">10123.4</div>
+            </div>
+
+            <div class="detail-row">
+                <div class="detail-label">Nation</div>
+                <div class="detail-value">Navarr</div>
+            </div>
+
+            <div class="detail-row">
+                <div class="detail-label">Lineage</div>
+                <div class="detail-value">Changeling</div>
+            </div>
+
+            <div class="detail-row">
+                <div class="detail-label">Archetype</div>
+                <div class="detail-value">Vine</div>
+            </div>
+
+            <div class="detail-row">
+                <div class="detail-label">Virtue</div>
+                <div class="detail-value">—</div>
+            </div>
+
+            <div class="detail-row">
+                <div class="detail-label">Banner</div>
+                <div class="detail-value">SilverCloud Banner</div>
+            </div>
+
+            <div class="detail-row">
+                <div class="detail-label">Coven</div>
+                <div class="detail-value">SilverCloud</div>
+            </div>
+
+            <div class="detail-row">
+                <div class="detail-label">Sect</div>
+                <div class="detail-value">—</div>
+            </div>
+
+            <div class="detail-row">
+                <div class="detail-label">Territory</div>
+                <div class="detail-value">Brocéliande</div>
+            </div>
+
+            <div class="detail-row">
+                <div class="detail-label">Resource</div>
+                <div class="detail-value">Military Unit</div>
+            </div>
+
+            <div class="detail-row">
+                <div class="detail-label">Level</div>
+                <div class="detail-value">1</div>
+            </div>
+
+            <div class="detail-row">
+                <div class="detail-label">Status</div>
+                <div class="detail-value">Played</div>
+            </div>
+
+            <div class="detail-row">
+                <div class="detail-label">Points Spent</div>
+                <div class="detail-value">14</div>
+            </div>
+
+        </div>
+
+
+        <!-- Bonded Items -->
+
+        <div class="section-title" style="margin-top:24px;">
+            ✦ Bonded Items
+        </div>
+
+        <div class="item-card">
+
+            <div class="item-name">
+                Band of Destiny
+            </div>
+
+            <div class="item-type">
+                Jotun Trinket • ID 56645
+            </div>
+
+            <div class="item-description">
+                Expires just before 2027 Winter Solstice.
+                Once per day, you may use the Unstoppable skill
+                without needing to know it and without spending
+                a hero point.
+            </div>
+
+        </div>
+
+
+        <!-- Quick access -->
+
+        <div class="section-title" style="margin-top:24px;">
+            Quick Access
+        </div>
+
+        <div class="quick-grid">
+
+            <button class="quick-button">
+                <span>⚔</span>
+                Skills
+            </button>
+
+            <button class="quick-button">
+                <span>✦</span>
+                Spells
+            </button>
+
+            <button class="quick-button">
+                <span>◈</span>
+                Rituals
+            </button>
+
+            <button class="quick-button">
+                <span>🏅</span>
+                Ribbons
+            </button>
+
+        </div>
+
+    </main>
+
+
+    <footer class="footer">
+        Empire Companion
+        <br>
+        Powered by your Profound Decisions character data
+    </footer>
+
+</div>
+
+</body>
+</html>

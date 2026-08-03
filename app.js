@@ -1,31 +1,133 @@
 let characters = [];
 let currentCharacter = null;
 
-async function loadCharacters() {
+const STORAGE_KEY = "empireCompanionCharacters";
+const CURRENT_KEY = "empireCompanionCurrent";
+
+
+async function startApp() {
+
+    // First try characters saved on this device
+    const savedCharacters = localStorage.getItem(STORAGE_KEY);
+
+    if (savedCharacters) {
+        try {
+            characters = JSON.parse(savedCharacters);
+        } catch (error) {
+            console.error("Could not read saved characters", error);
+            characters = [];
+        }
+    }
+
+    // If there are no local characters, load our example character
+    if (characters.length === 0) {
+        await loadExampleCharacter();
+    }
+
+    buildCharacterSelector();
+
+    const savedCurrent = localStorage.getItem(CURRENT_KEY);
+
+    if (savedCurrent) {
+        const found = characters.find(character => character.cid === savedCurrent);
+
+        if (found) {
+            currentCharacter = found;
+        }
+    }
+
+    if (!currentCharacter) {
+        currentCharacter = characters[0];
+    }
+
+    if (currentCharacter) {
+        displayCharacter(currentCharacter);
+    }
+}
+
+
+async function loadExampleCharacter() {
+
     try {
+
         const response = await fetch("data/characters.json");
 
         if (!response.ok) {
-            throw new Error("Could not load character data");
+            throw new Error("Could not load example character");
         }
 
         const data = await response.json();
 
         characters = data.characters || [];
 
-        if (characters.length === 0) {
-            showError("No characters found.");
-            return;
-        }
-
-        currentCharacter = characters[0];
-
-        displayCharacter(currentCharacter);
+        saveCharacters();
 
     } catch (error) {
+
         console.error(error);
-        showError("Unable to load character data.");
+
+        characters = [];
+
     }
+}
+
+
+function saveCharacters() {
+
+    localStorage.setItem(
+        STORAGE_KEY,
+        JSON.stringify(characters)
+    );
+}
+
+
+function buildCharacterSelector() {
+
+    const existing = document.getElementById("characterSelector");
+
+    if (!existing) {
+        return;
+    }
+
+    existing.innerHTML = "";
+
+    characters.forEach(character => {
+
+        const option = document.createElement("option");
+
+        option.value = character.cid;
+
+        option.textContent =
+            `${character.name} — ${character.nation || ""}`;
+
+        existing.appendChild(option);
+
+    });
+
+    if (currentCharacter) {
+        existing.value = currentCharacter.cid;
+    }
+}
+
+
+function changeCharacter(cid) {
+
+    const character = characters.find(
+        character => character.cid === cid
+    );
+
+    if (!character) {
+        return;
+    }
+
+    currentCharacter = character;
+
+    localStorage.setItem(
+        CURRENT_KEY,
+        character.cid
+    );
+
+    displayCharacter(character);
 }
 
 
@@ -85,13 +187,23 @@ function displayCharacter(character) {
     document.getElementById("pointsSpent").textContent =
         character.pointsSpent ?? "—";
 
-    displayBondedItems(character.bondedItems || []);
+    displayBondedItems(
+        character.bondedItems || []
+    );
+
+    const selector =
+        document.getElementById("characterSelector");
+
+    if (selector) {
+        selector.value = character.cid;
+    }
 }
 
 
 function displayBondedItems(items) {
 
-    const container = document.getElementById("bondedItems");
+    const container =
+        document.getElementById("bondedItems");
 
     container.innerHTML = "";
 
@@ -110,7 +222,8 @@ function displayBondedItems(items) {
 
     items.forEach(item => {
 
-        const card = document.createElement("div");
+        const card =
+            document.createElement("div");
 
         card.className = "item-card";
 
@@ -130,13 +243,15 @@ function displayBondedItems(items) {
         `;
 
         container.appendChild(card);
+
     });
 }
 
 
 function escapeHTML(value) {
 
-    const div = document.createElement("div");
+    const div =
+        document.createElement("div");
 
     div.textContent = value;
 
@@ -144,20 +259,7 @@ function escapeHTML(value) {
 }
 
 
-function showError(message) {
-
-    const name = document.getElementById("characterName");
-
-    if (name) {
-        name.textContent = "Error";
-    }
-
-    console.error(message);
-}
-
-
-/* Start the application */
-
-document.addEventListener("DOMContentLoaded", () => {
-    loadCharacters();
-});
+document.addEventListener(
+    "DOMContentLoaded",
+    startApp
+);

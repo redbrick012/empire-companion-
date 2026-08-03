@@ -1,0 +1,33 @@
+{
+  "characters": [
+    {
+      "name": "Iven",
+      "cid": "10123.4",
+      "nation": "Navarr",
+      "lineage": "Changeling",
+      "archetype": "Vine",
+      "virtue": "",
+      "banner": "SilverCloud Banner",
+      "coven": "SilverCloud",
+      "sect": "",
+      "territory": "Brocéliande",
+      "resource": "Military Unit",
+      "level": 1,
+      "status": "Played",
+      "pointsSpent": 14,
+      "bondedItems": [
+        {
+          "id": "56645",
+          "name": "Band of Destiny",
+          "type": "Jotun Trinket",
+          "description": "Expires just before 2027 Winter Solstice. Once per day, you may use the Unstoppable skill without needing to know it and without spending a hero point."
+        }
+      ],
+      "skills": [],
+      "ribbons": [],
+      "rituals": [],
+      "spells": [],
+      "background": {}
+    }
+  ]
+}

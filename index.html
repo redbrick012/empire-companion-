@@ -417,7 +417,53 @@
         <div id="bondedItems"></div>
 
         <!-- Quick access -->
+<div class="section-title" style="margin-top:24px;">
+    Profound Decisions
+</div>
 
+<div class="item-card">
+
+    <button
+        onclick="openPDLogin()"
+        style="
+            width:100%;
+            padding:14px;
+            border:none;
+            border-radius:10px;
+            background:#315b73;
+            color:white;
+            font-size:15px;
+            font-weight:bold;
+        ">
+        🔐 Log in to Profound Decisions
+    </button>
+
+    <button
+        onclick="testPDConnection()"
+        style="
+            width:100%;
+            padding:14px;
+            margin-top:10px;
+            border:1px solid #315b73;
+            border-radius:10px;
+            background:white;
+            color:#315b73;
+            font-size:15px;
+            font-weight:bold;
+        ">
+        🔎 Test PD Connection
+    </button>
+
+    <div
+        id="pdConnectionStatus"
+        style="
+            margin-top:12px;
+            font-size:13px;
+            line-height:1.5;
+        ">
+    </div>
+
+</div>
         <div class="section-title" style="margin-top:24px;">
             Quick Access
         </div>

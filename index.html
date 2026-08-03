@@ -271,18 +271,17 @@
     <!-- Character -->
     <section class="character">
 
-        <div class="character-name">
-            Iven
-        </div>
+        <div class="character-name" id="characterName">
+    Loading...
+</div>
 
-        <div class="character-summary">
-            Navarr • Changeling • Vine
-        </div>
-
+<div class="character-summary" id="characterSummary">
+    Loading character...
+</div>
         <div class="badges">
-            <div class="badge">Level 1</div>
-            <div class="badge">Played</div>
-            <div class="badge">SilverCloud</div>
+           <div class="badge" id="levelBadge">Level</div>
+<div class="badge" id="statusBadge">Status</div>
+<div class="badge" id="bannerBadge">Banner</div>
         </div>
 
     </section>
@@ -329,67 +328,67 @@
 
             <div class="detail-row">
                 <div class="detail-label">CID</div>
-                <div class="detail-value">10123.4</div>
+                <div class="detail-value" id="cid">—</div>
             </div>
 
             <div class="detail-row">
                 <div class="detail-label">Nation</div>
-                <div class="detail-value">Navarr</div>
+                <div class="detail-value" id="nation">—</div>
             </div>
 
             <div class="detail-row">
                 <div class="detail-label">Lineage</div>
-                <div class="detail-value">Changeling</div>
+                <div class="detail-value" id="lineage">—</div>
             </div>
 
             <div class="detail-row">
                 <div class="detail-label">Archetype</div>
-                <div class="detail-value">Vine</div>
+                <div class="detail-value" id="archetype">—</div>
             </div>
 
             <div class="detail-row">
                 <div class="detail-label">Virtue</div>
-                <div class="detail-value">—</div>
+                <div class="detail-value" id="virtue">—</div>
             </div>
 
             <div class="detail-row">
                 <div class="detail-label">Banner</div>
-                <div class="detail-value">SilverCloud Banner</div>
+                <div class="detail-value" id="banner">—</div>
             </div>
 
             <div class="detail-row">
                 <div class="detail-label">Coven</div>
-                <div class="detail-value">SilverCloud</div>
+                <div class="detail-value" id="coven">—</div>
             </div>
 
             <div class="detail-row">
                 <div class="detail-label">Sect</div>
-                <div class="detail-value">—</div>
+                <div class="detail-value" id="sect">—</div>
             </div>
 
             <div class="detail-row">
                 <div class="detail-label">Territory</div>
-                <div class="detail-value">Brocéliande</div>
+                <div class="detail-value" id="territory">—</div>
             </div>
 
             <div class="detail-row">
                 <div class="detail-label">Resource</div>
-                <div class="detail-value">Military Unit</div>
+                <div class="detail-value" id="resource">—</div>
             </div>
 
             <div class="detail-row">
                 <div class="detail-label">Level</div>
-                <div class="detail-value">1</div>
+                <div class="detail-value" id="level">—</div>
             </div>
 
             <div class="detail-row">
                 <div class="detail-label">Status</div>
-                <div class="detail-value">Played</div>
+                <div class="detail-value" id="status">—</div>
             </div>
 
             <div class="detail-row">
                 <div class="detail-label">Points Spent</div>
-                <div class="detail-value">14</div>
+                <div class="detail-value" id="pointsSpent">—</div>
             </div>
 
         </div>
@@ -401,25 +400,7 @@
             ✦ Bonded Items
         </div>
 
-        <div class="item-card">
-
-            <div class="item-name">
-                Band of Destiny
-            </div>
-
-            <div class="item-type">
-                Jotun Trinket • ID 56645
-            </div>
-
-            <div class="item-description">
-                Expires just before 2027 Winter Solstice.
-                Once per day, you may use the Unstoppable skill
-                without needing to know it and without spending
-                a hero point.
-            </div>
-
-        </div>
-
+        <div id="bondedItems"></div>
 
         <!-- Quick access -->
 
@@ -461,6 +442,8 @@
     </footer>
 
 </div>
-
+    
+<script src="app.js"></script>
+    
 </body>
 </html>
